@@ -1,7 +1,26 @@
-﻿
-<div id="player"></div>
+﻿@model Video
+
+<div class="text-center">
+    <h1>
+        @ViewBag.Title
+        <small class="text-muted">(with autoplay)</small>
+    </h1>
+    <div id="player"></div>
+</div>
 
 @section scripts {
-	<script src="~/Scripts/youtube/general.js"></script>
-	@Html.Partial("_Scripts")
+    <script type="text/javascript">
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '@Model.Height',
+                width: '@Model.Width',
+                videoId: '@Model.Id',
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+    </script>
 }
